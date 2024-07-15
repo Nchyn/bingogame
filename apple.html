@@ -1,0 +1,142 @@
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6">
+    <link rel="icon" type="image/png" href="./src/favicon.png">
+    <link href="./src/style.css" rel="stylesheet" type="text/css">
+    <title>果粉宾果</title>
+    <style>
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            display: grid;
+            align-items: center;
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 760px;
+        }
+    </style>
+
+<body>
+    <div class="all">
+        <div class="header">
+            <div class="headerleft">
+                <h1>果粉宾果</h1>
+                <p>五个连起来就是纯纯果粉<br>快转发给你身边的苹果用户吧</p>
+                <button id="screenshotBtn">生成页面截图</button>
+            </div>
+            <div class="headerright">
+                <script type="text/javascript">
+                    //<!CDATA[
+                    var pic = [];
+                    pic[0] = "./src/yyp.jpg";
+                    pic[1] = "./src/vp.jpg";
+                    pic[2] = "./src/mouse.jpg";
+                 
+                    var randomBgIndex = Math.round( Math.random() * 2 );
+                 
+                    //输出随机的背景图
+                    //document.write('<style>body{background:url(' + bodyBgs[randomBgIndex] + ') no-repeat 50% 0}</style>');
+                    document.write("<img src=" + pic[randomBgIndex] + " width='100%'>")
+                    //]]>
+                </script>
+                
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="button"><span>用苹果<br>三件套</span></div>
+            <div class="button"><span>每年更换<br>新手机</span></div>
+            <div class="button"><span>关注了<br>luvletter</span></div>
+            <div class="button"><span>对双卡<br>不感冒</span></div>
+            <div class="button"><span>经常用<br>AirDrop</span></div>
+
+            <div class="button"><span>电脑没有<br>Windows</span></div>
+            <div class="button"><span>及时升级<br>iOS</span></div>
+            <div class="button"><span>觉得<br>iTunes 好用</span></div>
+            <div class="button"><span>没有<br>安卓手机</span></div>
+            <div class="button"><span>和客服<br>保修对线</span></div>
+
+            <div class="button"><span>觉得刘海屏<br>电脑很合理</span></div>
+            <div class="button"><span>喜欢<br>FaceTime</span></div>
+            <div class="button"><span>买 AC+</span></div>
+            <div class="button"><span>iMessage<br>吹水</span></div>
+            <div class="button"><span>赞美<br>Vision Pro</span></div>
+
+            <div class="button"><span>被垃圾短信<br>电话骚扰</span></div>
+            <div class="button"><span>觉得<br>8G 电脑好用</span></div>
+            <div class="button"><span>订阅<br>Apple Music</span></div>
+            <div class="button"><span>观看<br>TV+ 电视剧</span></div>
+            <div class="button"><span>用<br>iWorks 办公</span></div>
+
+            <div class="button"><span>旅游时前往<br>直营店</span></div>
+            <div class="button"><span>相信苹果的<br>隐私保护</span></div>
+            <div class="button"><span>特意把照片<br>P在窗口上</span></div>
+            <div class="button"><span>接受<br>高端手机<br>用720P屏幕</span></div>
+            <div class="button"><span>经历过iPhone在地铁没信号</span></div>
+            <!-- Your other buttons -->
+        </div>
+    </div>
+
+    <!-- This div will hold the screenshot -->
+    <div class="screenshot"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script>
+        document.getElementById('screenshotBtn').addEventListener('click', function () {
+            var button = document.getElementById('screenshotBtn');
+            button.style.display = 'none'; // Hide the screenshot button
+
+            html2canvas(document.querySelector("body > div.all"), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL();
+                    var screenshot = new Image();
+                    screenshot.src = img;
+
+                    // Display the screenshot
+                    var screenshotDiv = document.querySelector('.screenshot');
+                    screenshotDiv.appendChild(screenshot);
+                    screenshotDiv.style.display = 'block';
+
+                    // Hide the rest of the content
+                    var container = document.querySelector('.all');
+                    container.style.display = 'none';
+                    document.querySelector('.returnbtn').style.display = "block";
+                    document.querySelector('#homebtn').style.display = "block";
+                    document.body.style.background = "#ccc";
+                }
+            });
+        });
+    </script>
+    <script>
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+            });
+        });
+    </script>
+    <button id="returnbtn" class="returnbtn" onclick="location.reload()">↑图片已生成，请右键或长按复制↑<br>点此重新填写</button>
+    <button id="homebtn" class="returnbtn" onclick="window.location.href='./index.html'">返回主页</button>
+    <script>
+        document.getElementById('returnbtn').addEventListener('click', function () {
+            var imageElement = document.querySelector("body > div.screenshot > img");
+            var imageUrl = imageElement.src;
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]).then(function () {
+                        alert('图片已复制到剪切板！');
+                    }).catch(function (err) {
+                        console.error('复制失败：', err);
+                    });
+                })
+                .catch(error => console.error('获取图片失败：', error));
+        });
+    </script>
+
+</html>
