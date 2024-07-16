@@ -9,11 +9,16 @@
     <style>
         .header {
             text-align: left;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: grid;
             align-items: center;
             grid-template-columns: repeat(2, 1fr);
             max-width: 760px;
+        }
+
+        .header p {
+            font-size: 15pt;
+            /* Adjust the font size as needed */
         }
     </style>
 
@@ -32,15 +37,15 @@
                     pic[0] = "./src/youkuli.jpg";
                     pic[1] = "./src/smt.jpg";
                     pic[2] = "./src/djy.jpg";
-                 
-                    var randomBgIndex = Math.round( Math.random() * 2 );
-                 
+
+                    var randomBgIndex = Math.round(Math.random() * 2);
+
                     //输出随机的背景图
                     //document.write('<style>body{background:url(' + bodyBgs[randomBgIndex] + ') no-repeat 50% 0}</style>');
                     document.write("<img src=" + pic[randomBgIndex] + " width='100%'>")
                     //]]>
                 </script>
-                
+
             </div>
         </div>
 
