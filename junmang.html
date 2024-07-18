@@ -1,0 +1,117 @@
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6">
+    <link rel="icon" type="image/png" href="./src/favicon.png">
+    <link href="./src/style.css" rel="stylesheet" type="text/css">
+    <title>军盲区宾果</title>
+    <style>
+
+    </style>
+
+<body>
+    <div class="all">
+        <div class="header">
+            <h1>军盲区宾果</h1>
+            <p>下列你熟知内幕的信息只要有五个连成一线<br>就说明你是老情报专家了<br>制图@教头1927<br>求真务实 保护脑子</p>
+            <button id="screenshotBtn">生成页面截图</button>
+        </div>
+
+        <div class="container">
+
+            <div class="button"><span>艾森豪威尔号被胡塞开洞</span></div>
+            <div class="button"><span>巨力索具<br>美军严选</span></div>
+            <div class="button"><span>六爷单挑<br>里根战斗群</span></div>
+            <div class="button"><span>055也去<br>单挑了</span></div>
+            <div class="button"><span>军演训练<br>伤亡指标</span></div>
+
+            <div class="button"><span>F22在<br>福建坠毀</span></div>
+            <div class="button"><span>沙特阿拉伯<br>买12艘052D</span></div>
+            <div class="button"><span>沙特还买了<br>整个合成旅</span></div>
+            <div class="button"><span>退役歼10<br>送给朝鲜</span></div>
+            <div class="button"><span>吕宋岛<br>断网12小时</span></div>
+
+            <div class="button"><span>于敏构型<br>氢弹保质期长</span></div>
+            <div class="button"><span>福特号<br>没有IOC</span></div>
+            <div class="button"><span>运10前途无量<br>功亏一篑</span></div>
+            <div class="button"><span>国际法禁用<br>白磷弹、达姆弹</span></div>
+            <div class="button"><span>贫铀弹是<br>核武器</span></div>
+
+            <div class="button"><span>黄海军演<br>5小时跑路</span></div>
+            <div class="button"><span>杨利伟任务受伤<br>不能再上天</span></div>
+            <div class="button"><span>美国吞并<br>乌克兰国企</span></div>
+            <div class="button"><span>银河号<br>被掐GPS</span></div>
+            <div class="button"><span>美国海军是<br>世界第二强空军</span></div>
+            
+            <div class="button"><span>顺丰无人机<br>被PLA征用</span></div>
+            <div class="button"><span>一小时<br>全歼三个营</span></div>
+            <div class="button"><span>马里乌波尔<br>有大鱼</span></div>
+            <div class="button"><span>美国领海<br>只有3海里</span></div>
+            <div class="button"><span>台湾大断电<br>1450销声匿迹</span></div>
+            <!-- Your other buttons -->
+        </div>
+    </div>
+
+    <!-- This div will hold the screenshot -->
+    <div class="screenshot"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script>
+        document.getElementById('screenshotBtn').addEventListener('click', function () {
+            var button = document.getElementById('screenshotBtn');
+            button.style.display = 'none'; // Hide the screenshot button
+
+            html2canvas(document.querySelector("body > div.all"), {
+                onrendered: function (canvas) {
+                    var img = canvas.toDataURL();
+                    var screenshot = new Image();
+                    screenshot.src = img;
+
+                    // Display the screenshot
+                    var screenshotDiv = document.querySelector('.screenshot');
+                    screenshotDiv.appendChild(screenshot);
+                    screenshotDiv.style.display = 'block';
+
+                    // Hide the rest of the content
+                    var container = document.querySelector('.all');
+                    container.style.display = 'none';
+                    document.querySelector('.returnbtn').style.display = "block";
+                    document.querySelector('#homebtn').style.display = "block";
+                    document.body.style.background = "#ccc";
+                }
+            });
+        });
+    </script>
+    <script>
+        const buttons = document.querySelectorAll('.button');
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+            });
+        });
+    </script>
+    <button id="returnbtn" class="returnbtn" onclick="location.reload()">↑图片已生成，请右键或长按复制↑<br>点此重新填写</button>
+    <button id="homebtn" class="returnbtn" onclick="window.location.href='./index.html'">返回主页</button>
+    <script>
+        document.getElementById('returnbtn').addEventListener('click', function () {
+            var imageElement = document.querySelector("body > div.screenshot > img");
+            var imageUrl = imageElement.src;
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]).then(function () {
+                        alert('图片已复制到剪切板！');
+                    }).catch(function (err) {
+                        console.error('复制失败：', err);
+                    });
+                })
+                .catch(error => console.error('获取图片失败：', error));
+        });
+    </script>
+
+</html>
