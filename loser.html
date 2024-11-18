@@ -1,0 +1,113 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="style.css" rel="stylesheet" type="text/css" >
+    <title>果粉宾果</title>
+    <style>
+        .container {
+            text-align: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 5 columns of equal width */
+    gap: 10px;
+    max-width: 960px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+    </style>
+<body>
+    <div class="all">
+        <div class="header">
+            <h1>“八失人员”和“三低三少人员”摸排bingo</h1>
+            <p>把符合你条件的圈起来，如果连成一条线，（直线和曲线都算）
+            <br>说明你很接近八失三低三少状态，值得社区摸排</p>
+            <button id="screenshotBtn">生成页面截图</button>
+        </div>
+
+        <div class="container">
+            <div class="button"><span>工作失业</span></div>
+            <div class="button"><span>投资失败</span></div>
+            <div class="button"><span>生活失业</span></div>
+            <div class="button"><span>流动机会少</span></div>
+            
+            <div class="button"><span>情感失和<br>（失爱）</span></div>
+            <div class="button"><span>关系失和</span></div>
+            <div class="button"><span>心态失衡</span></div>
+            <div class="button"><span>年少失管</span></div>
+
+            <div class="button"><span>精神失常</span></div>
+            <div class="button"><span>人际交往少</span></div>
+            <div class="button"><span>经济收入低</span></div>
+            <div class="button"><span>上网失度</span></div>
+
+            <div class="button"><span>社会声望低</span></div>
+            <div class="button"><span>权力地位低</span></div>
+            <div class="button"><span>疏导渠道少</span></div>
+            <div class="button"><span>未来失望</span></div>
+            <!-- Your other buttons -->
+        </div>
+    </div>
+    
+    <!-- This div will hold the screenshot -->
+    <div class="screenshot"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    
+    <script>
+        document.getElementById('screenshotBtn').addEventListener('click', function() {
+            var button = document.getElementById('screenshotBtn');
+            button.style.display = 'none'; // Hide the screenshot button
+
+            html2canvas(document.querySelector("body > div.all"), {
+                onrendered: function(canvas) {
+                    var img = canvas.toDataURL();
+                    var screenshot = new Image();
+                    screenshot.src = img;
+
+                    // Display the screenshot
+                    var screenshotDiv = document.querySelector('.screenshot');
+                    screenshotDiv.appendChild(screenshot);
+                    screenshotDiv.style.display = 'block';
+
+                    // Hide the rest of the content
+                    var container = document.querySelector('.all');
+                    container.style.display = 'none';
+                    document.querySelector('.returnbtn').style.display = "block";
+                    document.querySelector('#homebtn').style.display = "block";
+                    document.body.style.background = "#ccc";
+                }
+            });
+        });
+    </script>
+        <script>
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.toggle('active');
+                });
+            });
+        </script>
+    <button id="returnbtn" class="returnbtn" onclick="location.reload()">↑图片已生成，请右键或长按复制↑<br>点此重新填写</button>
+    <button id="homebtn" class="returnbtn" onclick="window.location.href='./index.html'">返回主页</button>
+    <script>
+        document.getElementById('returnbtn').addEventListener('click', function() {
+            var imageElement = document.querySelector("body > div.screenshot > img");
+            var imageUrl = imageElement.src;
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]).then(function() {
+                        alert('图片已复制到剪切板！');
+                    }).catch(function(err) {
+                        console.error('复制失败：', err);
+                    });
+                })
+                .catch(error => console.error('获取图片失败：', error));
+        });
+    </script>
+</html>
